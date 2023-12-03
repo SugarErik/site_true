@@ -46,94 +46,147 @@
         .menu-item.clicked {
             background-color: var(--tg-theme-bg-color);
         }
+
+        .cart-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .cart-modal h2 {
+            margin-top: 0;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Меню для заказа еды</h1>
-    </header>
+<header>
+    <h1>Меню для заказа еды</h1>
+</header>
 
-    <div class="app">
-        <div class="menu-item" onclick="addToCart('Бургер', 5.99)" onmousedown="animateClick(this)">
-            <img src="Burger1.png" alt="Бургер">
-            <h3>Бургер</h3>
-            <span>$5.99</span>
-        </div>
-
-        <div class="menu-item" onclick="addToCart('Пицца', 8.99)" onmousedown="animateClick(this)">
-            <img src="Burger1.png" alt="Пицца">
-            <h3>Пицца</h3>
-            <span>$8.99</span>
-        </div>
-
-        <div class="menu-item" onclick="addToCart('Суши', 12.99)" onmousedown="animateClick(this)">
-            <img src="Burger1.png" alt="Суши">
-            <h3>Суши</h3>
-            <span>$12.99</span>
-        </div>
-
-        <div class="menu-item" onclick="addToCart('Салат', 6.99)" onmousedown="animateClick(this)">
-            <img src="Burger1.png" alt="Салат">
-            <h3>Салат</h3>
-            <span>$6.99</span>
-        </div>
-
-        <div class="menu-item" onclick="addToCart('Бургер 2', 7.99)" onmousedown="animateClick(this)">
-            <img src="Burger1.png" alt="Бургер из залупы коня">
-            <h3>Бургер 2</h3>
-            <span>$7.99</span>
-        </div>
-
-        <div class="menu-item" onclick="addToCart('Паста', 10.99)" onmousedown="animateClick(this)">
-            <img src="Burger1.png" alt="Паста">
-            <h3>Паста</h3>
-            <span>$10.99</span>
-        </div>
-
-        <!-- Добавьте еще два элемента меню здесь -->
-
+<div class="app">
+    <div class="menu-item" onclick="addToCart('Бургер', 5.99)" onmousedown="animateClick(this)">
+        <img src="Burger1.png" alt="Бургер">
+        <h3>Бургер</h3>
+        <span>$5.99</span>
     </div>
 
-    <section>
-        <h2>Корзина</h2>
-        <ul id="cart"></ul>
-        <button onclick="checkout()">Оформить заказ</button>
-    </section>
+    <div class="menu-item" onclick="addToCart('Пицца', 8.99)" onmousedown="animateClick(this)">
+        <img src="Burger1.png" alt="Пицца">
+        <h3>Пицца</h3>
+        <span>$8.99</span>
+    </div>
 
-    <script>
-        let cartItems = [];
+    <div class="menu-item" onclick="addToCart('Суши', 12.99)" onmousedown="animateClick(this)">
+        <img src="Burger1.png" alt="Суши">
+        <h3>Суши</h3>
+        <span>$12.99</span>
+    </div>
 
-        function addToCart(itemName, itemPrice) {
-            cartItems.push({ name: itemName, price: itemPrice });
-            updateCart();
-        }
+    <div class="menu-item" onclick="addToCart('Салат', 6.99)" onmousedown="animateClick(this)">
+        <img src="Burger1.png" alt="Салат">
+        <h3>Салат</h3>
+        <span>$6.99</span>
+    </div>
 
-        function updateCart() {
-            const cartList = document.getElementById('cart');
-            cartList.innerHTML = '';
+    <div class="menu-item" onclick="addToCart('Бургер 2', 7.99)" onmousedown="animateClick(this)">
+        <img src="Burger1.png" alt="Бургер из залупы коня">
+        <h3>Бургер 2</h3>
+        <span>$7.99</span>
+    </div>
 
-            cartItems.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.name}: $${item.price.toFixed(2)}`;
-                cartList.appendChild(li);
-            });
-        }
+    <div class="menu-item" onclick="addToCart('Паста', 10.99)" onmousedown="animateClick(this)">
+        <img src="Burger1.png" alt="Паста">
+        <h3>Паста</h3>
+        <span>$10.99</span>
+    </div>
 
-        function checkout() {
-            // Реализуйте здесь логику оформления заказа
-            alert('Заказ успешно оформлен!');
-            cartItems = []; // Очистить корзину после оформления заказа
-            updateCart();
-        }
+    <!-- Добавьте еще два элемента меню здесь -->
 
-        function animateClick(element) {
-            element.classList.add('clicked');
-            setTimeout(() => {
-                element.classList.remove('clicked');
-            }, 300);
-        }
-    </script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</div>
+
+<button class="cart-button" onclick="openCart()">🛒</button>
+
+<div class="cart-modal" id="cartModal">
+    <span class="close-modal" onclick="closeCart()">✖️</span>
+    <h2>Корзина</h2>
+    <ul id="cart"></ul>
+    <button onclick="checkout()">Оформить заказ</button>
+</div>
+
+<script>
+    let cartItems = [];
+
+    function addToCart(itemName, itemPrice) {
+        cartItems.push({ name: itemName, price: itemPrice });
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartList = document.getElementById('cart');
+        cartList.innerHTML = '';
+
+        cartItems.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name}: $${item.price.toFixed(2)}`;
+            cartList.appendChild(li);
+        });
+    }
+
+    function checkout() {
+        // Реализуйте здесь логику оформления заказа
+        alert('Заказ успешно оформлен!');
+        cartItems = []; // Очистить корзину после оформления заказа
+        updateCart();
+        closeCart();
+    }
+
+    function openCart() {
+        const cartModal = document.getElementById('cartModal');
+        cartModal.style.display = 'block';
+    }
+
+    function closeCart() {
+        const cartModal = document.getElementById('cartModal');
+        cartModal.style.display = 'none';
+    }
+
+    function animateClick(element) {
+        element.classList.add('clicked');
+        setTimeout(() => {
+            element.classList.remove('clicked');
+        }, 300);
+    }
+</script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
