@@ -22,7 +22,7 @@
         .app {
             display: grid;
             grid-gap: 15px;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Уменьшил минимальную ширину плиток */
             padding: 20px;
         }
 
@@ -46,61 +46,6 @@
         .menu-item.clicked {
             background-color: var(--tg-theme-bg-color);
         }
-
-        /* Styles for the round shopping cart icon */
-        #cart-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background-color: var(--tg-theme-button-color);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-        }
-
-        #cart-icon img {
-            width: 30px; /* Adjust the size of the cart icon */
-            height: 30px; /* Adjust the size of the cart icon */
-        }
-
-        section {
-            display: none;
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background-color: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 998;
-        }
-
-        section h2 {
-            text-align: center;
-        }
-
-        section ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        section button {
-            display: block;
-            margin-top: 10px;
-            padding: 10px;
-            width: 100%;
-            background-color: var(--tg-theme-button-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -110,12 +55,44 @@
     </header>
 
     <div class="app">
-        <!-- ... Your menu items go here ... -->
-    </div>
+        <div class="menu-item" onclick="addToCart('Бургер', 5.99)" onmousedown="animateClick(this)">
+            <img src="Burger1.png" alt="Бургер">
+            <h3>Бургер</h3>
+            <span>$5.99</span>
+        </div>
 
-    <!-- Round shopping cart icon -->
-    <div id="cart-icon" onclick="toggleCart()">
-        <img src="cart-icon.png" alt="Корзина">
+        <div class="menu-item" onclick="addToCart('Пицца', 8.99)" onmousedown="animateClick(this)">
+            <img src="Burger1.png" alt="Пицца">
+            <h3>Пицца</h3>
+            <span>$8.99</span>
+        </div>
+
+        <div class="menu-item" onclick="addToCart('Суши', 12.99)" onmousedown="animateClick(this)">
+            <img src="Burger1.png" alt="Суши">
+            <h3>Суши</h3>
+            <span>$12.99</span>
+        </div>
+
+        <div class="menu-item" onclick="addToCart('Салат', 6.99)" onmousedown="animateClick(this)">
+            <img src="Burger1.png" alt="Салат">
+            <h3>Салат</h3>
+            <span>$6.99</span>
+        </div>
+
+        <div class="menu-item" onclick="addToCart('Бургер 2', 7.99)" onmousedown="animateClick(this)">
+            <img src="Burger1.png" alt="Бургер из залупы коня">
+            <h3>Бургер 2</h3>
+            <span>$7.99</span>
+        </div>
+
+        <div class="menu-item" onclick="addToCart('Паста', 10.99)" onmousedown="animateClick(this)">
+            <img src="Burger1.png" alt="Паста">
+            <h3>Паста</h3>
+            <span>$10.99</span>
+        </div>
+
+        <!-- Добавьте еще два элемента меню здесь -->
+
     </div>
 
     <section>
@@ -144,8 +121,9 @@
         }
 
         function checkout() {
+            // Реализуйте здесь логику оформления заказа
             alert('Заказ успешно оформлен!');
-            cartItems = [];
+            cartItems = []; // Очистить корзину после оформления заказа
             updateCart();
         }
 
@@ -154,19 +132,6 @@
             setTimeout(() => {
                 element.classList.remove('clicked');
             }, 300);
-        }
-
-        let isCartOpen = false;
-
-        function toggleCart() {
-            const cartSection = document.querySelector('section');
-            isCartOpen = !isCartOpen;
-
-            if (isCartOpen) {
-                cartSection.style.display = 'block';
-            } else {
-                cartSection.style.display = 'none';
-            }
         }
     </script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
