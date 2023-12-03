@@ -5,9 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Меню для заказа еды</title>
     <style>
-        /* ... (your existing styles) ... */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--tg-theme-bg-color);
+        }
 
-        #cart-container {
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .app {
+            display: grid;
+            grid-gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            padding: 20px;
+        }
+
+        .menu-item {
+            padding: 15px;
+            background-color: var(--tg-theme-button-color);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .menu-item.clicked {
+            background-color: var(--tg-theme-bg-color);
+        }
+
+        /* Styles for the round shopping cart icon */
+        #cart-icon {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -16,57 +57,116 @@
             background-color: var(--tg-theme-button-color);
             border-radius: 50%;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             cursor: pointer;
-            color: white;
-            font-size: 18px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
         }
 
-        #cart-content {
+        #cart-icon img {
+            width: 30px; /* Adjust the size of the cart icon */
+            height: 30px; /* Adjust the size of the cart icon */
+        }
+
+        section {
             display: none;
             position: fixed;
             bottom: 80px;
             right: 20px;
-            max-width: 300px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             padding: 15px;
-            z-index: 1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 998;
         }
 
-        #cart-content ul {
-            list-style: none;
+        section h2 {
+            text-align: center;
+        }
+
+        section ul {
+            list-style-type: none;
             padding: 0;
         }
 
-        #cart-content li {
-            margin-bottom: 10px;
+        section button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            background-color: var(--tg-theme-button-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- ... (your existing HTML) ... -->
+    <header>
+        <h1>Меню для заказа еды</h1>
+    </header>
 
-    <div id="cart-container" onclick="toggleCart()">
-        🛒
+    <div class="app">
+        <!-- ... Your menu items go here ... -->
     </div>
 
-    <div id="cart-content">
+    <!-- Round shopping cart icon -->
+    <div id="cart-icon" onclick="toggleCart()">
+        <img src="cart-icon.png" alt="Корзина">
+    </div>
+
+    <section>
         <h2>Корзина</h2>
         <ul id="cart"></ul>
         <button onclick="checkout()">Оформить заказ</button>
-    </div>
+    </section>
 
     <script>
-        // ... (your existing JavaScript) ...
+        let cartItems = [];
+
+        function addToCart(itemName, itemPrice) {
+            cartItems.push({ name: itemName, price: itemPrice });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartList = document.getElementById('cart');
+            cartList.innerHTML = '';
+
+            cartItems.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name}: $${item.price.toFixed(2)}`;
+                cartList.appendChild(li);
+            });
+        }
+
+        function checkout() {
+            alert('Заказ успешно оформлен!');
+            cartItems = [];
+            updateCart();
+        }
+
+        function animateClick(element) {
+            element.classList.add('clicked');
+            setTimeout(() => {
+                element.classList.remove('clicked');
+            }, 300);
+        }
+
+        let isCartOpen = false;
 
         function toggleCart() {
-            const cartContent = document.getElementById('cart-content');
-            cartContent.style.display = cartContent.style.display === 'none' ? 'block' : 'none';
+            const cartSection = document.querySelector('section');
+            isCartOpen = !isCartOpen;
+
+            if (isCartOpen) {
+                cartSection.style.display = 'block';
+            } else {
+                cartSection.style.display = 'none';
+            }
         }
     </script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
