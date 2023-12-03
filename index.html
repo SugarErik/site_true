@@ -22,11 +22,6 @@
             color: white;
             font-size: 18px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            z-index: 2;
-        }
-
-        #cart-container:hover {
-            background-color: var(--tg-theme-bg-color);
         }
 
         #cart-content {
@@ -54,26 +49,26 @@
 </head>
 <body>
 
-<!-- ... (your existing HTML) ... -->
+    <!-- ... (your existing HTML) ... -->
 
-<div id="cart-container" onclick="toggleCart()">
-    🛒
-</div>
+    <div id="cart-container" onclick="toggleCart()">
+        🛒
+    </div>
 
-<div id="cart-content">
-    <h2>Корзина</h2>
-    <ul id="cart"></ul>
-    <button onclick="checkout()">Оформить заказ</button>
-</div>
+    <div id="cart-content">
+        <h2>Корзина</h2>
+        <ul id="cart"></ul>
+        <button onclick="checkout()">Оформить заказ</button>
+    </div>
 
-<script>
-    // ... (your existing JavaScript) ...
+    <script>
+        // ... (your existing JavaScript) ...
 
-    function toggleCart() {
-        const cartContent = document.getElementById('cart-content');
-        cartContent.style.display = cartContent.style.display === 'none' ? 'block' : 'none';
-    }
-</script>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+        function toggleCart() {
+            const cartContent = document.getElementById('cart-content');
+            cartContent.style.display = cartContent.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
