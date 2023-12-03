@@ -22,7 +22,7 @@
         .app {
             display: grid;
             grid-gap: 15px;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Уменьшил минимальную ширину плиток */
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             padding: 20px;
         }
 
@@ -85,6 +85,12 @@
             right: 10px;
             cursor: pointer;
         }
+
+        .delete-item {
+            cursor: pointer;
+            color: red;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -129,9 +135,6 @@
         <h3>Паста</h3>
         <span>$10.99</span>
     </div>
-
-    <!-- Добавьте еще два элемента меню здесь -->
-
 </div>
 
 <button class="cart-button" onclick="openCart()">🛒</button>
@@ -155,17 +158,29 @@
         const cartList = document.getElementById('cart');
         cartList.innerHTML = '';
 
-        cartItems.forEach(item => {
+        cartItems.forEach((item, index) => {
             const li = document.createElement('li');
             li.textContent = `${item.name}: $${item.price.toFixed(2)}`;
+
+            // Add delete button
+            const deleteButton = document.createElement('span');
+            deleteButton.textContent = '❌';
+            deleteButton.className = 'delete-item';
+            deleteButton.onclick = () => removeFromCart(index);
+
+            li.appendChild(deleteButton);
             cartList.appendChild(li);
         });
     }
 
+    function removeFromCart(index) {
+        cartItems.splice(index, 1);
+        updateCart();
+    }
+
     function checkout() {
-        // Реализуйте здесь логику оформления заказа
         alert('Заказ успешно оформлен!');
-        cartItems = []; // Очистить корзину после оформления заказа
+        cartItems = [];
         updateCart();
         closeCart();
     }
