@@ -8,11 +8,11 @@
 </head>
 <body>
 <div class="container">
-    <h1>Добро пожаловать в наш отель!</h1>
-    <p>Выберите категорию:</p>
-    <button onclick="showMenu('food')">Еда</button>
-    <button onclick="showMenu('drinks')">Напитки</button>
-    <div id="menu-content"></div>
+    <div class="category-buttons">
+        <button onclick="showMenu('food')">Еда</button>
+        <button onclick="showMenu('drinks')">Напитки</button>
+    </div>
+    <div id="menu-content" class="menu-grid"></div>
     <div id="cart-content">
         <h2>Корзина</h2>
         <ul id="cart-items"></ul>

@@ -5,48 +5,52 @@ function showMenu(category) {
     const menuContent = document.getElementById('menu-content');
     if (category === 'food') {
         menuContent.innerHTML = `
-            <h2>Еда</h2>
-            <ul>
-                <li>
-                    Пицца - $10 
-                    <input type="number" id="pizza-quantity" min="1" value="1">
-                    <button onclick="addToCart('Пицца', 10, document.getElementById('pizza-quantity').value)">Добавить в корзину</button>
-                </li>
-                <li>
-                    Бургер - $8 
-                    <input type="number" id="burger-quantity" min="1" value="1">
-                    <button onclick="addToCart('Бургер', 8, document.getElementById('burger-quantity').value)">Добавить в корзину</button>
-                </li>
-            </ul>
+            <div class="menu-item">
+                <h3>Пицца</h3>
+                <p>$10</p>
+                <button onclick="addToCart('Пицца', 10)">Добавить в корзину</button>
+            </div>
+            <div class="menu-item">
+                <h3>Бургер</h3>
+                <p>$8</p>
+                <button onclick="addToCart('Бургер', 8)">Добавить в корзину</button>
+            </div>
         `;
     } else if (category === 'drinks') {
         menuContent.innerHTML = `
-            <h2>Напитки</h2>
-            <ul>
-                <li>
-                    Кола - $2 
-                    <input type="number" id="cola-quantity" min="1" value="1">
-                    <button onclick="addToCart('Кола', 2, document.getElementById('cola-quantity').value)">Добавить в корзину</button>
-                </li>
-                <li>
-                    Сок - $3 
-                    <input type="number" id="juice-quantity" min="1" value="1">
-                    <button onclick="addToCart('Сок', 3, document.getElementById('juice-quantity').value)">Добавить в корзину</button>
-                </li>
-            </ul>
+            <div class="menu-item">
+                <h3>Кола</h3>
+                <p>$2</p>
+                <button onclick="addToCart('Кола', 2)">Добавить в корзину</button>
+            </div>
+            <div class="menu-item">
+                <h3>Сок</h3>
+                <p>$3</p>
+                <button onclick="addToCart('Сок', 3)">Добавить в корзину</button>
+            </div>
         `;
     }
 }
 
-function addToCart(item, price, quantity) {
-    quantity = parseInt(quantity);
+function addToCart(item, price) {
     if (cart[item]) {
-        cart[item].quantity += quantity;
+        cart[item].quantity += 1;
     } else {
-        cart[item] = { price, quantity };
+        cart[item] = { price, quantity: 1 };
     }
-    totalPrice += price * quantity;
+    totalPrice += price;
     updateCart();
+}
+
+function removeFromCart(item) {
+    if (cart[item]) {
+        totalPrice -= cart[item].price;
+        cart[item].quantity -= 1;
+        if (cart[item].quantity <= 0) {
+            delete cart[item];
+        }
+        updateCart();
+    }
 }
 
 function updateCart() {
@@ -57,12 +61,6 @@ function updateCart() {
         cartItems.innerHTML += `<li>${item} x${cart[item].quantity} - $${cart[item].price * cart[item].quantity} <button onclick="removeFromCart('${item}')">Удалить</button></li>`;
     }
     totalPriceElement.innerHTML = `Итого: $${totalPrice}`;
-}
-
-function removeFromCart(item) {
-    totalPrice -= cart[item].price * cart[item].quantity;
-    delete cart[item];
-    updateCart();
 }
 
 function sendOrder() {
