@@ -7,8 +7,8 @@ function showMenu(category) {
         menuContent.innerHTML = `
             <h2>Еда</h2>
             <ul>
-                <li>Пицца - $10 <button onclick="addToCart('Пицца', 10)">Добавить в корзину</button></li>
-                <li>Бургер - $8 <button onclick="addToCart('Бургер', 8)">Добавить в корзину</button></li>
+                <li>Индиго - $10 <button onclick="addToCart('Пицца', 10)">Добавить в корзину</button></li>
+                <li>Перкасет - $8 <button onclick="addToCart('Бургер', 8)">Добавить в корзину</button></li>
             </ul>
         `;
     } else if (category === 'drinks') {
