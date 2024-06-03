@@ -45,6 +45,10 @@ function removeFromCart(index) {
 }
 
 function sendOrder() {
+    if (cart.length === 0) {
+        alert('Ваша корзина пуста!');
+        return;
+    }
     const orderDetails = cart.map(cartItem => `${cartItem.item} - $${cartItem.price}`).join('\n');
     const orderMessage = `Ваш заказ:\n${orderDetails}\n\nИтого: $${totalPrice}`;
     alert(orderMessage);
