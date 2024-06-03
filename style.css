@@ -35,7 +35,7 @@ button:hover {
     background-color: #0056b3;
 }
 
-#menu-content {
+#menu-content, #cart-content {
     margin-top: 20px;
 }
 
@@ -47,4 +47,9 @@ ul {
 li {
     padding: 8px 0;
     font-size: 16px;
+}
+
+input[type=number] {
+    width: 50px;
+    margin-left: 10px;
 }

@@ -1,4 +1,4 @@
-let cart = [];
+let cart = {};
 let totalPrice = 0;
 
 function showMenu(category) {
@@ -7,24 +7,45 @@ function showMenu(category) {
         menuContent.innerHTML = `
             <h2>Еда</h2>
             <ul>
-                <li>Пицца - $10 <button onclick="addToCart('Пицца', 10)">Добавить в корзину</button></li>
-                <li>Бургер - $8 <button onclick="addToCart('Бургер', 8)">Добавить в корзину</button></li>
+                <li>
+                    Пицца - $10 
+                    <input type="number" id="pizza-quantity" min="1" value="1">
+                    <button onclick="addToCart('Пицца', 10, document.getElementById('pizza-quantity').value)">Добавить в корзину</button>
+                </li>
+                <li>
+                    Бургер - $8 
+                    <input type="number" id="burger-quantity" min="1" value="1">
+                    <button onclick="addToCart('Бургер', 8, document.getElementById('burger-quantity').value)">Добавить в корзину</button>
+                </li>
             </ul>
         `;
     } else if (category === 'drinks') {
         menuContent.innerHTML = `
             <h2>Напитки</h2>
             <ul>
-                <li>Кола - $2 <button onclick="addToCart('Кола', 2)">Добавить в корзину</button></li>
-                <li>Сок - $3 <button onclick="addToCart('Сок', 3)">Добавить в корзину</button></li>
+                <li>
+                    Кола - $2 
+                    <input type="number" id="cola-quantity" min="1" value="1">
+                    <button onclick="addToCart('Кола', 2, document.getElementById('cola-quantity').value)">Добавить в корзину</button>
+                </li>
+                <li>
+                    Сок - $3 
+                    <input type="number" id="juice-quantity" min="1" value="1">
+                    <button onclick="addToCart('Сок', 3, document.getElementById('juice-quantity').value)">Добавить в корзину</button>
+                </li>
             </ul>
         `;
     }
 }
 
-function addToCart(item, price) {
-    cart.push({ item, price });
-    totalPrice += price;
+function addToCart(item, price, quantity) {
+    quantity = parseInt(quantity);
+    if (cart[item]) {
+        cart[item].quantity += quantity;
+    } else {
+        cart[item] = { price, quantity };
+    }
+    totalPrice += price * quantity;
     updateCart();
 }
 
@@ -32,24 +53,24 @@ function updateCart() {
     const cartItems = document.getElementById('cart-items');
     const totalPriceElement = document.getElementById('total-price');
     cartItems.innerHTML = '';
-    cart.forEach((cartItem, index) => {
-        cartItems.innerHTML += `<li>${cartItem.item} - $${cartItem.price} <button onclick="removeFromCart(${index})">Удалить</button></li>`;
-    });
+    for (let item in cart) {
+        cartItems.innerHTML += `<li>${item} x${cart[item].quantity} - $${cart[item].price * cart[item].quantity} <button onclick="removeFromCart('${item}')">Удалить</button></li>`;
+    }
     totalPriceElement.innerHTML = `Итого: $${totalPrice}`;
 }
 
-function removeFromCart(index) {
-    totalPrice -= cart[index].price;
-    cart.splice(index, 1);
+function removeFromCart(item) {
+    totalPrice -= cart[item].price * cart[item].quantity;
+    delete cart[item];
     updateCart();
 }
 
 function sendOrder() {
-    if (cart.length === 0) {
+    if (Object.keys(cart).length === 0) {
         alert('Ваша корзина пуста!');
         return;
     }
-    const orderDetails = cart.map(cartItem => `${cartItem.item} - $${cartItem.price}`).join('\n');
+    const orderDetails = Object.keys(cart).map(item => `${item} x${cart[item].quantity} - $${cart[item].price * cart[item].quantity}`).join('\n');
     const orderMessage = `Ваш заказ:\n${orderDetails}\n\nИтого: $${totalPrice}`;
     alert(orderMessage);
     Telegram.WebApp.sendData(orderMessage);  // Отправка данных в Telegram WebApp
