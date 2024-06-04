@@ -5,28 +5,28 @@ function showMenu(category) {
     const menuContent = document.getElementById('menu-content');
     if (category === 'food') {
         menuContent.innerHTML = `
-            <div class="menu-item">
+            <div class="menu-item" onclick="addToCart('Пицца', 10)">
+                <img src="https://via.placeholder.com/150" alt="Пицца">
                 <h3>Пицца</h3>
                 <p>$10</p>
-                <button onclick="addToCart('Пицца', 10)">Добавить в корзину</button>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" onclick="addToCart('Бургер', 8)">
+                <img src="https://via.placeholder.com/150" alt="Бургер">
                 <h3>Бургер</h3>
                 <p>$8</p>
-                <button onclick="addToCart('Бургер', 8)">Добавить в корзину</button>
             </div>
         `;
     } else if (category === 'drinks') {
         menuContent.innerHTML = `
-            <div class="menu-item">
+            <div class="menu-item" onclick="addToCart('Кола', 2)">
+                <img src="https://via.placeholder.com/150" alt="Кола">
                 <h3>Кола</h3>
                 <p>$2</p>
-                <button onclick="addToCart('Кола', 2)">Добавить в корзину</button>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" onclick="addToCart('Сок', 3)">
+                <img src="https://via.placeholder.com/150" alt="Сок">
                 <h3>Сок</h3>
                 <p>$3</p>
-                <button onclick="addToCart('Сок', 3)">Добавить в корзину</button>
             </div>
         `;
     }
