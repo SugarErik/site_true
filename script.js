@@ -6,12 +6,12 @@ function showMenu(category) {
     if (category === 'food') {
         menuContent.innerHTML = `
             <div class="menu-item" onclick="addToCart('Пицца', 10)">
-                <img src="https://via.placeholder.com/150" alt="Пицца">
+                <img src="burger.png" alt="Пицца">
                 <h3>Пицца</h3>
                 <p>$10</p>
             </div>
             <div class="menu-item" onclick="addToCart('Бургер', 8)">
-                <img src="https://via.placeholder.com/150" alt="Бургер">
+                <img src="burger.png" alt="Бургер">
                 <h3>Бургер</h3>
                 <p>$8</p>
             </div>
@@ -19,12 +19,12 @@ function showMenu(category) {
     } else if (category === 'drinks') {
         menuContent.innerHTML = `
             <div class="menu-item" onclick="addToCart('Кола', 2)">
-                <img src="https://via.placeholder.com/150" alt="Кола">
+                <img src="burger.png" alt="Кола">
                 <h3>Кола</h3>
                 <p>$2</p>
             </div>
             <div class="menu-item" onclick="addToCart('Сок', 3)">
-                <img src="https://via.placeholder.com/150" alt="Сок">
+                <img src="burger.png" alt="Сок">
                 <h3>Сок</h3>
                 <p>$3</p>
             </div>
