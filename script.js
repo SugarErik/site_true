@@ -1,3 +1,9 @@
+document.addEventListener('DOMContentLoaded', (event) => {
+    Telegram.WebApp.expand();
+});
+
+
+
 let cart = {};
 let totalPrice = 0;
 
